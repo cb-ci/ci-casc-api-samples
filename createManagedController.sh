@@ -17,8 +17,9 @@ if [ -n "$(kubectl get pvc jenkins-home-$CONTROLLER_NAME-0)" ]
 then
   #see https://docs.cloudbees.com/docs/cloudbees-ci-kb/latest/operations-center/how-to-delete-a-managed-controller-in-cloudbees-jenkins-enterprise-and-cloudbees-core
    echo "PVC jenkins-home-$CONTROLLER_NAME-0 exist, JENKINS_HOME will be recreated by CASC"
-   java -jar jenkins-cli.jar -auth admin:admin -s https://sda.acaternberg.flow-training.beescloud.com/cjoc/ managed-master-stop-and-deprovision $CONTROLLER_NAME
-   java -jar jenkins-cli.jar -auth admin:admin -s https://sda.acaternberg.flow-training.beescloud.com/cjoc/ delete-job $CONTROLLER_NAME
+   #TODO: delete/deprovisioning controller from cjoc
+   #java -jar jenkins-cli.jar -auth admin:admin -s https://sda.acaternberg.flow-training.beescloud.com/cjoc/ managed-master-stop-and-deprovision $CONTROLLER_NAME
+   #java -jar jenkins-cli.jar -auth admin:admin -s https://sda.acaternberg.flow-training.beescloud.com/cjoc/ delete-job $CONTROLLER_NAME
    kubectl delete pvc jenkins-home-$CONTROLLER_NAME-0
    #kubectl exec -ti ${CONTROLLER_NAME}-0 -- sh -c "rm -Rfv /var/jenkins_home/jobs/*"
 fi
