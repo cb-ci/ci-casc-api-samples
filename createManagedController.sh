@@ -13,15 +13,36 @@ mkdir -p $GEN_DIR
 envsubst < ${CREATE_MM_TEMPLATE_YAML} > $GEN_DIR/${CONTROLLER_NAME}.yaml
 #envsubst < ${CREATE_MM_FOLDER_TEMPLATE_YAML} > $GEN_DIR/${CONTROLLER_NAME}-folder.yaml
 
+ALL_CONTROLLERS_JSON=allcontrollers.json
+
+echo "Get all controllers to a local file $ALL_CONTROLLERS_JSON"
+curl -o $ALL_CONTROLLERS_JSON -s  -u $TOKEN "$CJOC_URL/view/Controllers/api/json?depth=2&pretty=true" | jq
+
+echo "Verify if $CONTROLLER_NAME controller exist"
+if [ -n $(cat $ALL_CONTROLLERS_JSON | jq -c ".jobs[] | select( .name | contains($CONTROLELR))") ]
+then
+  echo "$CONTROLLER_NAME controller exist, will be deleted now from CJOC"
+  PATH_MANAGED_CONTROLLER="job/$CONTROLLER_NAME"
+  PATH_TEAM_CONTROLLER="job/Teams/job/$CONTROLLER_NAME"
+  #For Managed Controllers use this path
+  PATH_CONTROLLER=$PATH_MANAGED_CONTROLLER
+  #For Team Controllers use this path
+  #PATH_CONTROLLER=$PATH_TEAM_CONTROLLER
+
+  echo "force stop Controller $CONTROLLER_NAME"
+  curl  -v -XPOST  -u $TOKEN "$CJOC_URL/$PATH_CONTROLLER/stopAction"
+  sleep 10
+  echo "delete Controller $CONTROLLER_NAME"
+  curl  -v -XPOST -u $TOKEN "$CJOC_URL/$PATH_CONTROLLER/doDelete"
+fi
+
+
+echo "Verify if PVC ${CONTROLLER_NAME}-0  exist"
 if [ -n "$(kubectl get pvc jenkins-home-$CONTROLLER_NAME-0)" ]
 then
   #see https://docs.cloudbees.com/docs/cloudbees-ci-kb/latest/operations-center/how-to-delete-a-managed-controller-in-cloudbees-jenkins-enterprise-and-cloudbees-core
-   echo "PVC jenkins-home-$CONTROLLER_NAME-0 exist, JENKINS_HOME will be recreated by CASC"
-   #TODO: delete/deprovisioning controller from cjoc
-   #java -jar jenkins-cli.jar -auth admin:admin -s https://sda.acaternberg.flow-training.beescloud.com/cjoc/ managed-master-stop-and-deprovision $CONTROLLER_NAME
-   #java -jar jenkins-cli.jar -auth admin:admin -s https://sda.acaternberg.flow-training.beescloud.com/cjoc/ delete-job $CONTROLLER_NAME
+   echo "PVC jenkins-home-$CONTROLLER_NAME-0 exist, will be deleted now"
    kubectl delete pvc jenkins-home-$CONTROLLER_NAME-0
-   #kubectl exec -ti ${CONTROLLER_NAME}-0 -- sh -c "rm -Rfv /var/jenkins_home/jobs/*"
 fi
 
 echo "------------------  CREATING MANAGED CONTROLLER ------------------"
