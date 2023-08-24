@@ -21,6 +21,7 @@ curl -o $ALL_CONTROLLERS_JSON -s  -u $TOKEN "$CJOC_URL/view/Controllers/api/json
 echo "Verify if $CONTROLLER_NAME controller exist"
 if [ -n $(cat $ALL_CONTROLLERS_JSON | jq -c ".jobs[] | select( .name | contains($CONTROLELR))") ]
 then
+
   echo "$CONTROLLER_NAME controller exist, will be deleted now from CJOC"
   PATH_MANAGED_CONTROLLER="job/$CONTROLLER_NAME"
   PATH_TEAM_CONTROLLER="job/Teams/job/$CONTROLLER_NAME"
@@ -29,6 +30,9 @@ then
   #For Team Controllers use this path
   #PATH_CONTROLLER=$PATH_TEAM_CONTROLLER
 
+  #We assume here that the controller is online
+  # As the $ALL_CONTROLLERS_JSON file with jq to check the connection state
+  # in case you want to delete offline controllers you need to skip this step
   echo "force stop Controller $CONTROLLER_NAME"
   curl  -v -XPOST  -u $TOKEN "$CJOC_URL/$PATH_CONTROLLER/stopAction"
   sleep 10
