@@ -1,9 +1,12 @@
 #! /bin/bash
 
 source ./envvars.sh
+
+echo "USage: $0: testcontroller mytestfolder"
+
 export CONTROLLER_NAME=${1:-$CONTROLLER_NAME}
 export CONTROLLER_URL=${BASE_URL}"/"${CONTROLLER_NAME}
-
+export FOLDER_NAME=${2:-$CONTROLLER_NAME}
 GEN_DIR=gen
 rm -rf $GEN_DIR
 mkdir -p $GEN_DIR

@@ -3,9 +3,9 @@ removeStrategy:
   items: NONE
 items:
 - kind: folder
-  name: ${CONTROLLER_NAME}
-  description: ''
-  displayName: ${CONTROLLER_NAME}
+  name: ${FOLDER_NAME}
+  description: ${FOLDER_NAME}
+  displayName: ${FOLDER_NAME}
   properties:
   - envVars: {
       }
