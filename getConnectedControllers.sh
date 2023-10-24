@@ -24,5 +24,8 @@ cat $ALL_CONTROLLERS_JSON | jq -c '.jobs[] | select( .url | contains("job/Teams/
 echo "Get just names and urls for all Managed Controllers"
 cat $ALL_CONTROLLERS_JSON | jq -c '.jobs[] | select( .url | contains("job/Teams/job/") | not)' | jq '.name,.url'
 
+curl -o controller_jobs.json -s  -u $TOKEN "https://sda.acaternberg.flow-training.beescloud.com/sb/api/json?depth=5&pretty=true" | jq
+
+
 
 
