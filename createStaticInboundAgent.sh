@@ -30,7 +30,7 @@ cat << EOF | java -jar jenkins-cli.jar -auth $TOKEN  -s $HOST create-node ${AGEN
 </slave>
 EOF
 
-#curl -O https://ci.acaternberg.pscbdemos.com/ha/jnlpJars/jenkins-cli.jar
+#curl -O $HOST/jnlpJars/jenkins-cli.jar
 chmod a+x jenkins-cli.jar
 java -jar jenkins-cli.jar -auth $TOKEN  -s $HOST get-node ${AGENT_NAME}
 
