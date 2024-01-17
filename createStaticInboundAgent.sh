@@ -4,7 +4,7 @@ TOKEN="user:token"
 HOST="https://CONTROLLER"
 
 #copy agent and create
-#java -jar jenkins-cli.jar -auth $TOKEN  -s https://ci.acaternberg.pscbdemos.com/ha/  get-node inbound1| java -jar jenkins-cli.jar -auth $TOKEN  -s https://ci.acaternberg.pscbdemos.com/ha/ create-node inbound3
+#java -jar jenkins-cli.jar -auth $TOKEN  -s $HOST get-node inbound1| java -jar jenkins-cli.jar -auth $TOKEN  -s $HOST create-node inbound3
 
 
 cat << EOF | java -jar jenkins-cli.jar -auth $TOKEN  -s $HOST create-node ${AGENT_NAME}
