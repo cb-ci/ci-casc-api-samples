@@ -1,5 +1,6 @@
 #! /bin/bash
 AGENT_NAME="$(hostname)-1"
+AGENT_LABEL="inbound"
 REMOTE_FS_DIR=$(pwd)/$AGENT_NAME
 TOKEN="user:jenkinstoken"
 HOST="https://CONTROLLER_URL"
@@ -9,7 +10,7 @@ HOST="https://CONTROLLER_URL"
 chmod a+x jenkins-cli.jar
 
 #copy agent node and create config on Controller
-#java -jar jenkins-cli.jar -auth $TOKEN  -s $HOST get-node inbound1| java -jar jenkins-cli.jar -auth $TOKEN  -s $HOST create-node inbound3
+#java -jar jenkins-cli.jar -auth $TOKEN  -s $HOST get-node inbound1 | java -jar jenkins-cli.jar -auth $TOKEN  -s $HOST create-node $AGENT_NAME
 
 #Create Agent node on Controller
 cat << EOF | java -jar jenkins-cli.jar -auth $TOKEN  -s $HOST create-node ${AGENT_NAME}
@@ -30,7 +31,7 @@ cat << EOF | java -jar jenkins-cli.jar -auth $TOKEN  -s $HOST create-node ${AGEN
     </workDirSettings>
     <webSocket>true</webSocket>
   </launcher>
-  <label>inbound</label>
+  <label>$AGENT_LABEL</label>
   <nodeProperties/>
 </slave>
 EOF
