@@ -5,12 +5,13 @@ REMOTE_FS_DIR=$(pwd)/$AGENT_NAME
 TOKEN="user:jenkinstoken"
 HOST="https://CONTROLLER_URL"
 
+
 ##Download jenkins-cli
 #curl -O $HOST/jnlpJars/jenkins-cli.jar
 chmod a+x jenkins-cli.jar
 
 #copy agent node and create config on Controller
-#java -jar jenkins-cli.jar -auth $TOKEN  -s $HOST get-node inbound1 | java -jar jenkins-cli.jar -auth $TOKEN  -s $HOST create-node $AGENT_NAME
+#java -jar jenkins-cli.jar -auth $TOKEN  -s $HOST get-node inbound1| java -jar jenkins-cli.jar -auth $TOKEN  -s $HOST create-node inbound3
 
 #Create Agent node on Controller
 cat << EOF | java -jar jenkins-cli.jar -auth $TOKEN  -s $HOST create-node ${AGENT_NAME}
@@ -53,6 +54,8 @@ mkdir -p $AGENT_NAME/remoting
 curl -sO $HOST/jnlpJars/agent.jar
 chmod a+x agent.jar
 #Launch agent
-java -jar agent.jar -jnlpUrl $HOST/computer/$AGENT_NAME/jenkins-agent.jnlp -secret $AGENT_SECRET -workDir "$REMOTE_FS_DIR" -failIfWorkDirIsMissing
-#Send in background,better create service lateron TODO
+nohup java -jar agent.jar -jnlpUrl $HOST/computer/$AGENT_NAME/jenkins-agent.jnlp -secret $AGENT_SECRET -workDir "$REMOTE_FS_DIR" -failIfWorkDirIsMissing  2>&1 & > /dev/null
+echo $! > $AGENT_NAME.pid
+tail -f nohup.out
+#Send in background,better create service later-on TODO
 #nohub java -jar agent.jar  ......   2>&1 & > /dev/null
