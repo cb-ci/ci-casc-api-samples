@@ -3,8 +3,12 @@
 ##Example: Create agents in a loop
 # for i in {1..3};do ./createStaticInboundAgent.sh $(hostname)-$i;done
 
-#Example: Kill all create created agent processes
-## for i in $(find . -name "*.pid");do cat  $i| xargs kill -15 ;done
+##Example: Kill all create created agent processes
+# for i in $(find . -name "*.pid");do cat  $i| xargs kill -15 ;done
+
+## Example: copy agent
+#copy agent node and create config on Controller
+#java -jar jenkins-cli.jar -auth $TOKEN  -s $HOST get-node inbound1| java -jar jenkins-cli.jar -auth $TOKEN  -s $HOST create-node inbound3
 
 echo "Usage: $0 <AGENT_NAME> <AGENT_LABEL>"
 
@@ -16,11 +20,9 @@ HOST="https://CONTROLLER_URL"
 
 
 ##Download jenkins-cli
-#curl -O $HOST/jnlpJars/jenkins-cli.jar
+curl -O $HOST/jnlpJars/jenkins-cli.jar
 chmod a+x jenkins-cli.jar
 
-#copy agent node and create config on Controller
-#java -jar jenkins-cli.jar -auth $TOKEN  -s $HOST get-node inbound1| java -jar jenkins-cli.jar -auth $TOKEN  -s $HOST create-node inbound3
 
 #Create Agent node on Controller
 cat << EOF | java -jar jenkins-cli.jar -auth $TOKEN  -s $HOST create-node ${AGENT_NAME}
