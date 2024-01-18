@@ -3,7 +3,7 @@
 ##Example: Create agents in a loop
 # for i in {1..3};do ./createStaticInboundAgent.sh $(hostname)-$i;done
 
-##Example: Kill all create created agent processes
+##Example: Kill all agent processes
 # for i in $(find . -name "*.pid");do cat  $i| xargs kill -15 ;done
 
 ## Example: copy agent
