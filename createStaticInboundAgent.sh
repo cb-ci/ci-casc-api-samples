@@ -1,6 +1,15 @@
 #! /bin/bash
-AGENT_NAME="$(hostname)-1"
-AGENT_LABEL="inbound"
+
+##Example: Create agents in a loop
+# for i in {1..3};do ./createStaticInboundAgent.sh $(hostname)-$i;done
+
+#Example: Kill all create created agent processes
+## for i in $(find . -name "*.pid");do cat  $i| xargs kill -15 ;done
+
+echo "Usage: $0 <AGENT_NAME> <AGENT_LABEL>"
+
+AGENT_NAME=${1:-"$(hostname)-1"}
+AGENT_LABEL=${2:-"inbound"}
 REMOTE_FS_DIR=$(pwd)/$AGENT_NAME
 TOKEN="user:jenkinstoken"
 HOST="https://CONTROLLER_URL"
