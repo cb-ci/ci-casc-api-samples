@@ -55,5 +55,3 @@ chmod a+x agent.jar
 java -jar agent.jar -jnlpUrl $HOST/computer/$AGENT_NAME/jenkins-agent.jnlp -secret $AGENT_SECRET -workDir "$REMOTE_FS_DIR" -failIfWorkDirIsMissing
 #Send in background,better create service lateron TODO
 #nohub java -jar agent.jar  ......   2>&1 & > /dev/null
-
-
