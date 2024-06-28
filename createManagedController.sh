@@ -22,6 +22,7 @@ then
 fi
 
 echo "------------------  CREATING MANAGED CONTROLLER ------------------"
+#see https://docs.cloudbees.com/docs/cloudbees-ci-api/latest/bundle-management-api
 curl -v -XPOST \
    --user $TOKEN \
    "${BASE_URL}/cjoc/casc-items/create-items" \
