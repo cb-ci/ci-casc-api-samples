@@ -1,0 +1,15 @@
+removeStrategy:
+  rbac: SYNC
+  items: NONE
+items:
+- kind: cloudbeesTemplatedJob
+  catalog: Pipeline Template Catalog Examples
+  name: ${JOB_NAME}
+  model: Pipeline-Tem.c3qk18.log-Examples/helloWorldSimple
+  attributes:
+    - type: string
+      value: Andreas
+      key: firstname
+    - type: string
+      value: Test
+      key: lastname
