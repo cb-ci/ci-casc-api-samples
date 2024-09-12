@@ -29,7 +29,7 @@ mkdir -p $GEN_DIR
 # All variables from the envvars.sh will be substituted
 envsubst < templates/create-PTC-job-instance.yaml > $GEN_DIR/${JOB_NAME}.yaml
 
-echo "------------------  CREATING MANAGED CONTROLLER ------------------"
+echo "------------------  CREATING A PTC JOB------------------"
 curl -v -XPOST \
    --user $TOKEN \
    "${CONTROLLER_URL}/casc-items/create-items" \
