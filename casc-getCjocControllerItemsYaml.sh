@@ -50,4 +50,14 @@ curl  -X POST  -u $TOKEN -sL -o cjoc-${CONTROLLER_NAME}-items.yaml \
 
 # So we use yq to to add the missing header
 
-yq eval '. | {"removeStrategy": {"rbac": "SYNC", "items": "NONE"}, "items": [.]}' cjoc-${CONTROLLER_NAME}-items.yaml
+yq eval '. | {"removeStrategy": {"rbac": "SYNC", "items": "NONE"}, "items": [.]}' cjoc-${CONTROLLER_NAME}-items.yaml > result-items.yaml
+
+
+
+# Re-apply  the the items.yaml to the cjoc
+
+curl  -XPOST \
+   -u $TOKEN \
+   "${CJOC_URL}/casc-items/create-items" \
+    -H "Content-Type:text/yaml" \
+   --data-binary @result-items.yaml
