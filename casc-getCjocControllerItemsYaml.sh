@@ -4,7 +4,7 @@ source ./envvars.sh
 
 #Example URL: https://example.com/cjoc/job/controller-0/export/download
 
-## Add your cjoc admin user and jenins admin  token
+## Add your cjoc admin user and Jenkins admin  token
 #TOKEN="cjocadminuser:cjocadminjenkinstoken"
 
 ## Adjust your controller name
