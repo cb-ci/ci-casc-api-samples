@@ -12,7 +12,32 @@ mkdir -p $GEN_DIR
 
 # We render the CasC template instances for the item (sharedAgent)
 # All variables from the envvars.sh will be substituted
-envsubst < templates/sharedAgent.yaml > $GEN_DIR/sharedAgent.yaml
+#envsubst < templates/sharedAgent.yaml > $GEN_DIR/sharedAgent.yaml
+cat << EOF > sharedAgent.yaml
+removeStrategy:
+  rbac: SYNC
+  items: NONE
+items:
+- kind: sharedAgent
+  name: ${SHARED_AGENT_NAME}
+  description: ''
+  displayName: ${SHARED_AGENT_NAME}
+  labels: ''
+  launcher:
+    inboundAgent:
+      webSocket: false
+      workDirSettings:
+        remotingWorkDirSettings:
+          internalDir: remoting
+          disabled: false
+          failIfWorkDirIsMissing: false
+  mode: NORMAL
+  numExecutors: 1
+  remoteFS: ${SHARED_AGENT_REMOTE_FS}
+  retentionStrategy:
+    sharedNodeRetentionStrategy: {}
+EOF
+
 
 # see https://docs.cloudbees.com/docs/cloudbees-ci-api/latest/bundle-management-api
 echo "------------------  CREATE/UPDATE SHARED AGENT ------------------"
@@ -20,7 +45,7 @@ curl -v -XPOST \
    --user $TOKEN \
    "${CJOC_URL}/casc-items/create-items" \
     -H "Content-Type:text/yaml" \
-   --data-binary @${GEN_DIR}/sharedAgent.yaml
+   --data-binary @sharedAgent.yaml
 
 #see https://docs.cloudbees.com/docs/cloudbees-ci-kb/latest/client-and-managed-controllers/how-to-find-agent-secret-key#_operations_center_shared_agents
 echo "def sharedAgent = Jenkins.getInstance().getItems(com.cloudbees.opscenter.server.model.SharedSlave.class).find { it.launcher != null && it.launcher.class.name == 'com.cloudbees.opscenter.server.jnlp.slave.JocJnlpSlaveLauncher' && it.name == '$SHARED_AGENT_NAME'}; return sharedAgent?.launcher.getJnlpMac(sharedAgent)" > agent_secret.groovy
