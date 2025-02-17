@@ -7,6 +7,7 @@ export SHARED_AGENT_REMOTE_FS="/tmp"
 
 
 echo "------------------  RENDER SHARED_AGENT ITEM YAML ------------------"
+#see https://docs.cloudbees.com/docs/cloudbees-ci/latest/casc-oc/items#_example_items_yaml_file
 # We render the CasC template instances for the item (sharedAgent)
 # All variables  will be substituted
 cat << EOF > sharedAgent.yaml
