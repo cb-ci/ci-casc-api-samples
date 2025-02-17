@@ -5,11 +5,6 @@ export CJOC_URL="https://<CJOC_URL>"
 export SHARED_AGENT_NAME="mySharedAgent"
 export SHARED_AGENT_REMOTE_FS="/tmp"
 
-# Create a gen dir where to render the template to
-GEN_DIR=gen
-rm -rf $GEN_DIR
-mkdir -p $GEN_DIR
-
 # We render the CasC template instances for the item (sharedAgent)
 # All variables  will be substituted
 cat << EOF > sharedAgent.yaml
@@ -53,11 +48,13 @@ AGENT_SECRET=$(echo $AGENT_SECRET | sed "s#Result: ##g")
 echo  "AGENT SECRET FOR $AGENT_NAME : $AGENT_SECRET"
 
 #Create agent workspace
-mkdir -p $SHARED_AGENT_NAME/remoting
+#mkdir -p $SHARED_AGENT_NAME/remoting
 curl -sO $CJOC_URL/jnlpJars/agent.jar
 chmod a+x agent.jar
 #Launch agent
 java -jar agent.jar -url $CJOC_URL -name $SHARED_AGENT_NAME -secret $AGENT_SECRET -workDir $SHARED_AGENT_REMOTE_FS -webSocket
+
+#RUN in background
 #nohup java -jar agent.jar -url $CJOC_URL -name $SHARED_AGENT_NAME -secret $AGENT_SECRET -workDir $SHARED_AGENT_REMOTE_FS -webSocket  2>&1 & > /dev/null
 #echo $! > $AGENT_NAME.pid
 #tail -f nohup.out
