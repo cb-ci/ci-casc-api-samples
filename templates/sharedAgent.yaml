@@ -1,0 +1,22 @@
+removeStrategy:
+  rbac: SYNC
+  items: NONE
+items:
+- kind: sharedAgent
+  name: ${SHARED_AGENT_NAME}
+  description: ''
+  displayName: ${SHARED_AGENT_NAME}
+  labels: ''
+  launcher:
+    inboundAgent:
+      webSocket: false
+      workDirSettings:
+        remotingWorkDirSettings:
+          internalDir: remoting
+          disabled: false
+          failIfWorkDirIsMissing: false
+  mode: NORMAL
+  numExecutors: 1
+  remoteFS: ${SHARED_AGENT_REMOTE_FS}
+  retentionStrategy:
+    sharedNodeRetentionStrategy: {}
