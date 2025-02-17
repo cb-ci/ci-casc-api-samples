@@ -11,8 +11,7 @@ rm -rf $GEN_DIR
 mkdir -p $GEN_DIR
 
 # We render the CasC template instances for the item (sharedAgent)
-# All variables from the envvars.sh will be substituted
-#envsubst < templates/sharedAgent.yaml > $GEN_DIR/sharedAgent.yaml
+# All variables  will be substituted
 cat << EOF > sharedAgent.yaml
 removeStrategy:
   rbac: SYNC
