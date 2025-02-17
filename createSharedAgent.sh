@@ -52,7 +52,7 @@ echo  "AGENT SECRET FOR $AGENT_NAME : $AGENT_SECRET"
 
 
 echo "------------------  START AGENT CONNECTION ------------------"
-#Download agent.jar and start agent connection to CJOC sharedAgent
+#Download agent.jar
 curl -sO $CJOC_URL/jnlpJars/agent.jar
 chmod a+x agent.jar
 #Launch agent
