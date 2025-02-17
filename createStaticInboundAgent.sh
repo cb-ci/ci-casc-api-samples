@@ -25,6 +25,7 @@ chmod a+x jenkins-cli.jar
 
 
 #Create Agent node on Controller
+#NOTE: This should better be done by CasC items.yaml
 cat << EOF | java -jar jenkins-cli.jar -auth $TOKEN  -s $HOST create-node ${AGENT_NAME}
 <?xml version="1.1" encoding="UTF-8"?>
 <slave>
