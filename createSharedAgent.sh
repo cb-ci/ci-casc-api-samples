@@ -29,7 +29,7 @@ AGENT_SECRET=$(echo $AGENT_SECRET | sed "s#Result: ##g")
 echo  "AGENT SECRET FOR $AGENT_NAME : $AGENT_SECRET"
 
 #Create agent workspace
-mkdir -p $AGENT_NAME/remoting
+mkdir -p $SHARED_AGENT_NAME/remoting
 curl -sO $CJOC_URL/jnlpJars/agent.jar
 chmod a+x agent.jar
 #Launch agent
