@@ -49,7 +49,7 @@ echo "------------------  GET AGENT SECRET ------------------"
 echo "def sharedAgent = Jenkins.getInstance().getItems(com.cloudbees.opscenter.server.model.SharedSlave.class).find { it.launcher != null && it.launcher.class.name == 'com.cloudbees.opscenter.server.jnlp.slave.JocJnlpSlaveLauncher' && it.name == '$SHARED_AGENT_NAME'}; return sharedAgent?.launcher.getJnlpMac(sharedAgent)" > agent_secret.groovy
 AGENT_SECRET=$(curl -XPOST --data-urlencode  "script=$(cat ./agent_secret.groovy)" -L -s --user $TOKEN $CJOC_URL/scriptText)
 AGENT_SECRET=$(echo $AGENT_SECRET | sed "s#Result: ##g")
-echo  "AGENT SECRET FOR $AGENT_NAME : $AGENT_SECRET"
+echo  "AGENT SECRET: $AGENT_SECRET"
 
 
 echo "------------------  START AGENT CONNECTION ------------------"
