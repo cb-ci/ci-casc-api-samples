@@ -47,8 +47,7 @@ AGENT_SECRET=$(curl -XPOST --data-urlencode  "script=$(cat ./agent_secret.groovy
 AGENT_SECRET=$(echo $AGENT_SECRET | sed "s#Result: ##g")
 echo  "AGENT SECRET FOR $AGENT_NAME : $AGENT_SECRET"
 
-#Create agent workspace
-#mkdir -p $SHARED_AGENT_NAME/remoting
+#Download agent.jar and start agent connection to CJOC sharedAgent
 curl -sO $CJOC_URL/jnlpJars/agent.jar
 chmod a+x agent.jar
 #Launch agent
