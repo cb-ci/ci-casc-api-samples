@@ -35,10 +35,11 @@ items:
     sharedNodeRetentionStrategy: {}
 EOF
 
+cat sharedAgent.yaml
+
 echo "------------------  CREATE/UPDATE SHARED AGENT ------------------"
 # see https://docs.cloudbees.com/docs/cloudbees-ci-api/latest/bundle-management-api
-curl -v -XPOST \
-   --user $TOKEN \
+curl -D- --user $TOKEN \
    "${CJOC_URL}/casc-items/create-items" \
     -H "Content-Type:text/yaml" \
    --data-binary @sharedAgent.yaml
